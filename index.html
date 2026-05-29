@@ -326,11 +326,11 @@
   <!-- IDEAS -->
   <div class="tab-content active" id="tab-0">
     <h2 class="section-title">Content <em>Ideas</em></h2>
-    <p class="section-sub">Describe a product, a vibe, or what you're feeling — get 5 viral ideas tailored to your style.</p>
+    <p class="section-sub">Describe a product, vibe, or what you're feeling. This will copy a strong ChatGPT prompt so you can paste it into our chat and get current trend-aware ideas from me.</p>
     <div class="card">
       <div class="card-label">Your prompt</div>
       <textarea class="prompt-area" id="idea-input" placeholder="e.g. 'I just got my Saltair gifting package' or 'summer Amazon finds' or 'I want to do a microinfluencer tips video'..."></textarea>
-      <button class="btn-primary" id="idea-btn" onclick="generateIdeas()">Generate Ideas</button>
+      <button class="btn-primary" id="idea-btn" onclick="generateIdeas()">Copy Prompt for ChatGPT</button>
     </div>
     <div id="idea-result" class="result-box hidden"></div>
     <div style="margin-top:18px">
@@ -349,11 +349,11 @@
   <!-- CAPTIONS -->
   <div class="tab-content" id="tab-1">
     <h2 class="section-title">Caption <em>Writer</em></h2>
-    <p class="section-sub">Describe your video and get 2 captions in your exact voice — hook, follow CTA, and hashtags included.</p>
+    <p class="section-sub">Describe your video and copy a ChatGPT prompt for captions in your exact voice, with a hook, follow CTA, and hashtags.</p>
     <div class="card">
       <div class="card-label">Describe your video</div>
       <textarea class="prompt-area" id="caption-input" placeholder="e.g. 'Target summer haul, Wild Fable matching sets all under $40' or 'morning room reset using my Saltair gifted products'..."></textarea>
-      <button class="btn-primary" id="caption-btn" onclick="generateCaption()">Write My Caption</button>
+      <button class="btn-primary" id="caption-btn" onclick="generateCaption()">Copy Caption Prompt</button>
     </div>
     <div id="caption-result" class="result-box hidden"></div>
     <div class="tips-box">
@@ -369,11 +369,11 @@
   <!-- SHOPMY -->
   <div class="tab-content" id="tab-2">
     <h2 class="section-title">ShopMy <em>Strategy</em></h2>
-    <p class="section-sub">Your ShopMy is performing really well. Let's keep it growing.</p>
+    <p class="section-sub">Copy a ChatGPT prompt for ShopMy strategy when you want help turning content into clicks.</p>
     <div class="card">
       <div class="card-label">Ask me anything</div>
       <textarea class="prompt-area" id="shopmy-input" placeholder="e.g. 'How do I convert viral viewers to ShopMy clicks?' or 'What collections should I create?' or 'Best way to mention ShopMy without being salesy?'"></textarea>
-      <button class="btn-primary" id="shopmy-btn" onclick="generateShopMy()">Get Strategy</button>
+      <button class="btn-primary" id="shopmy-btn" onclick="generateShopMy()">Copy Strategy Prompt</button>
     </div>
     <div id="shopmy-result" class="result-box hidden"></div>
     <div class="tips-box">
@@ -676,32 +676,87 @@ async function callClaude(sys,msg) {
   const data = await res.json();
   return data.content?.[0]?.text||'Something went wrong, please try again.';
 }
-async function generateIdeas() {
+function copyTextToClipboard(text) {
+  if (navigator.clipboard && window.isSecureContext) {
+    return navigator.clipboard.writeText(text);
+  }
+  const textarea = document.createElement('textarea');
+  textarea.value = text;
+  textarea.style.position = 'fixed';
+  textarea.style.opacity = '0';
+  document.body.appendChild(textarea);
+  textarea.focus();
+  textarea.select();
+  try { document.execCommand('copy'); } catch(e) {}
+  document.body.removeChild(textarea);
+  return Promise.resolve();
+}
+function showCopiedPrompt(resultId, promptText, message) {
+  const result = document.getElementById(resultId);
+  result.textContent = promptText;
+  result.classList.remove('hidden');
+  copyTextToClipboard(promptText).then(() => showToast(message));
+}
+function generateIdeas() {
   const input = document.getElementById('idea-input').value.trim();
-  if(!input)return;
-  const btn=document.getElementById('idea-btn'), result=document.getElementById('idea-result');
-  btn.disabled=true; btn.innerHTML='Generating<span class="loading-dots"></span>'; result.classList.add('hidden');
-  try{result.textContent=await callClaude('Generate 5 specific viral-optimized TikTok video ideas for Sophie. For each: 1) Punchy hook and text overlay, 2) Concept in 1-2 sentences, 3) ShopMy monetization angle, 4) Why it will perform. Format clearly numbered. Be very specific to her style and what already goes viral for her.',input);result.classList.remove('hidden');}
-  catch(e){result.textContent='Error, please try again.';result.classList.remove('hidden');}
-  btn.disabled=false;btn.innerHTML='Generate Ideas';
+  if(!input){ showToast('Type what you want ideas for first'); return; }
+  const prompt = `Give me 10 TikTok content ideas for Sophie (@sophieslifeatm) based on current viral TikTok trends and what is working right now in beauty, fashion, lifestyle, try-on hauls, PR hauls, ShopMy, and microinfluencer tips.
+
+My prompt/topic is: ${input}
+
+Use my current creator context:
+- I make beauty, fashion, lifestyle, try-on haul, PR haul, ShopMy, and microinfluencer tip content
+- My audience likes affordable fashion, Target/Amazon finds, GRWMs, morning routines, room resets, PR packages, and creator growth tips
+- My content style is casual, pretty, clean, girly, warm, and relatable
+- I want ideas that can realistically go viral, not generic ideas
+
+For each idea, include:
+1. The exact text-on-screen hook
+2. The video concept/structure
+3. Why it works with current trends
+4. A caption idea
+5. A ShopMy or brand angle when relevant
+6. Whether it should be a talking video, aesthetic vlog, haul, GRWM, or carousel-style TikTok`;
+  showCopiedPrompt('idea-result', prompt, 'Prompt copied for ChatGPT');
 }
-async function generateCaption() {
+function generateCaption() {
   const input = document.getElementById('caption-input').value.trim();
-  if(!input)return;
-  const btn=document.getElementById('caption-btn'),result=document.getElementById('caption-result');
-  btn.disabled=true;btn.innerHTML='Writing<span class="loading-dots"></span>';result.classList.add('hidden');
-  try{result.textContent=await callClaude("Write a TikTok caption for Sophie in her exact voice — warm, casual, best friend energy. Must: 1) Start with a scroll-stopping hook, 2) Be conversational and relatable, 3) End with explicit follow CTA, 4) Include 5-8 hashtags mixing niche and broad. Write 2 options.",input);result.classList.remove('hidden');}
-  catch(e){result.textContent='Error, please try again.';result.classList.remove('hidden');}
-  btn.disabled=false;btn.innerHTML='Write My Caption';
+  if(!input){ showToast('Describe the video first'); return; }
+  const prompt = `Write 5 TikTok caption options for Sophie (@sophieslifeatm) in my exact voice.
+
+Video description: ${input}
+
+My style: casual, warm, pretty, girly, and natural like texting a friend. Avoid sounding salesy or AI-generated. No em dashes.
+
+Each caption should include:
+1. A strong first line/hook
+2. A natural follow CTA
+3. A ShopMy/linking mention if relevant
+4. 5-8 relevant hashtags
+5. A slightly different vibe for each option, like casual, excited, honest review, aesthetic, and follower-growth focused`;
+  showCopiedPrompt('caption-result', prompt, 'Caption prompt copied');
 }
-async function generateShopMy() {
+function generateShopMy() {
   const input = document.getElementById('shopmy-input').value.trim();
-  if(!input)return;
-  const btn=document.getElementById('shopmy-btn'),result=document.getElementById('shopmy-result');
-  btn.disabled=true;btn.innerHTML='Thinking<span class="loading-dots"></span>';result.classList.add('hidden');
-  try{result.textContent=await callClaude("You are a ShopMy affiliate strategy expert. Sophie's top converters are Target Wild Fable items. Give specific actionable advice to maximize clicks and earnings. Include: which products to prioritize, how to mention ShopMy naturally, caption language that drives clicks, collection tips.",input);result.classList.remove('hidden');}
-  catch(e){result.textContent='Error, please try again.';result.classList.remove('hidden');}
-  btn.disabled=false;btn.innerHTML='Get Strategy';
+  if(!input){ showToast('Type your ShopMy question first'); return; }
+  const prompt = `Help me with ShopMy strategy for Sophie (@sophieslifeatm).
+
+My question is: ${input}
+
+My context:
+- I am a beauty, fashion, lifestyle, and try-on haul creator
+- My ShopMy performs best with fashion, especially affordable finds and viral outfits
+- I want strategy that feels natural, not salesy
+- I want to increase clicks, conversions, and gifting opportunities
+
+Give me specific advice including:
+1. What products or categories to prioritize
+2. How to mention links naturally in TikToks
+3. Caption wording that drives clicks
+4. Collection/shelf ideas
+5. How to connect this to current viral TikTok trends
+6. What I should do today`;
+  showCopiedPrompt('shopmy-result', prompt, 'Strategy prompt copied');
 }
 
 function buildPlan() {
