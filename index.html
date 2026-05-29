@@ -239,6 +239,23 @@
     padding: 11px 16px; font-size: 14px; font-family: 'Nunito', sans-serif;
     color: var(--text); outline: none; background: var(--white); margin-bottom: 12px;
   }
+  .add-brand-box {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: 16px; padding: 12px; margin-bottom: 12px;
+    box-shadow: 0 2px 14px rgba(196,99,122,0.04);
+  }
+  .add-brand-row { display: grid; grid-template-columns: 1fr 120px; gap: 8px; margin-bottom: 8px; }
+  .add-brand-status {
+    border: 1.5px solid var(--border); border-radius: 12px;
+    padding: 10px 12px; font-size: 12px; font-family: 'Nunito', sans-serif;
+    color: var(--text-mid); background: var(--white); outline: none; font-weight: 700;
+  }
+  .btn-add-brand {
+    background: var(--pink-dark); color: #fff; border: none; border-radius: 12px;
+    padding: 11px 16px; font-size: 12px; font-family: 'Nunito', sans-serif;
+    font-weight: 800; letter-spacing: 0.6px; text-transform: uppercase; cursor: pointer; width: 100%;
+  }
+  .btn-add-brand:active { transform: scale(0.98); }
   .brand-row {
     background: var(--white); border-radius: 12px; padding: 12px 16px;
     border: 1px solid var(--border);
@@ -414,6 +431,21 @@
       <button class="filter-btn" onclick="filterBrands('sent',this)">Sent</button>
       <button class="filter-btn" onclick="filterBrands('not_now',this)">Not Now</button>
     </div>
+
+    <div class="add-brand-box">
+      <div class="card-label" style="margin-bottom:10px">Add a brand</div>
+      <div class="add-brand-row">
+        <input class="field-input" id="new-brand-name" type="text" placeholder="e.g. Josie Maran" onkeydown="if(event.key==='Enter') addBrand()">
+        <select class="add-brand-status" id="new-brand-status">
+          <option value="sent">Sent</option>
+          <option value="gifting">Gifting</option>
+          <option value="pr_list">PR List</option>
+          <option value="not_now">Not Now</option>
+        </select>
+      </div>
+      <button class="btn-add-brand" onclick="addBrand()">Add Brand</button>
+    </div>
+
     <input class="search-input" type="text" placeholder="Search brands..." oninput="searchBrands(this.value)" />
     <div id="brand-list"></div>
   </div>
@@ -735,6 +767,30 @@ function buildPlan() {
 }
 function quickLog(day){switchTab(5);setTimeout(()=>{document.getElementById('log-day').value=day;document.getElementById('log-what').focus();showToast('Fill in what you posted for Day '+day);},100);}
 
+function escapeHtml(str) {
+  return String(str).replace(/[&<>'"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[ch]));
+}
+function addBrand(){
+  const nameEl = document.getElementById('new-brand-name');
+  const statusEl = document.getElementById('new-brand-status');
+  const name = nameEl.value.trim();
+  const status = statusEl.value;
+  if(!name){ showToast('Type a brand name first'); return; }
+  if(brandState.some(b => b.name.toLowerCase() === name.toLowerCase())){ showToast('That brand is already listed'); return; }
+  brandState.unshift({name, status});
+  currentFilter = 'all';
+  currentSearch = '';
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelector('.filter-btn').classList.add('active');
+  const searchInput = document.querySelector('.search-input');
+  if(searchInput) searchInput.value = '';
+  nameEl.value = '';
+  statusEl.value = 'sent';
+  saveToStorage();
+  renderBrands();
+  applyStats();
+  showToast(name + ' added');
+}
 function renderBrands(){
   const filtered=brandState.filter(b=>(currentFilter==='all'||b.status===currentFilter)&&b.name.toLowerCase().includes(currentSearch.toLowerCase()));
   const gc=brandState.filter(b=>b.status==='gifting').length;
@@ -745,7 +801,7 @@ function renderBrands(){
     ?'<p style="color:var(--text-muted);text-align:center;padding:20px;font-size:13px">No brands match this filter</p>'
     :filtered.map(b=>{const sc=STATUS_CONFIG[b.status];return`
       <div class="brand-row" style="${b.status==='gifting'?'border-color:#c8e6d0;box-shadow:0 2px 8px rgba(90,125,101,0.1)':''}">
-        <span class="brand-name ${b.status==='gifting'?'gifting':''}">${b.name}</span>
+        <span class="brand-name ${b.status==='gifting'?'gifting':''}">${escapeHtml(b.name)}</span>
         <select class="status-select" onchange="changeBrandStatus(${JSON.stringify(b.name).replace(/"/g,'&quot;')}, this.value)" style="background-color:${sc.bg};color:${sc.color}">
           <option value="sent" ${b.status==='sent'?'selected':''}>Sent</option>
           <option value="gifting" ${b.status==='gifting'?'selected':''}>Gifting</option>
