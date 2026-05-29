@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -246,6 +247,23 @@
   .brand-name { font-size: 14px; color: var(--text); font-weight: 500; }
   .brand-name.gifting { font-weight: 700; }
   .status-pill { font-size: 10px; padding: 3px 10px; border-radius: 20px; font-weight: 700; white-space: nowrap; letter-spacing: 0.5px; text-transform: uppercase; }
+  .status-select {
+    border: none;
+    border-radius: 20px;
+    padding: 6px 28px 6px 12px;
+    font-size: 10px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    outline: none;
+    cursor: pointer;
+    appearance: none;
+    background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%);
+    background-position: calc(100% - 14px) 50%, calc(100% - 9px) 50%;
+    background-size: 5px 5px, 5px 5px;
+    background-repeat: no-repeat;
+  }
 
   /* ── DIVIDER ── */
   .divider { text-align: center; margin: 22px 0; color: var(--border); font-size: 12px; letter-spacing: 6px; }
@@ -547,14 +565,32 @@ const STATUS_CONFIG = {
   sent:    {label:'Sent',     bg:'var(--butter)',    color:'var(--butter-dark)'},
 };
 
-let stats = {}, postLogs = {}, currentFilter = 'all', currentSearch = '', expandedWeek = -1;
+let stats = {}, postLogs = {}, brandState = [], currentFilter = 'all', currentSearch = '', expandedWeek = -1;
 
 function loadState() {
   try { stats = JSON.parse(localStorage.getItem('sophie_stats') || 'null') || {...DEFAULTS}; } catch(e) { stats = {...DEFAULTS}; }
   try { postLogs = JSON.parse(localStorage.getItem('sophie_postlogs') || '{}'); } catch(e) { postLogs = {}; }
+
+  try {
+    const savedBrands = JSON.parse(localStorage.getItem('sophie_brand_statuses') || 'null');
+    brandState = savedBrands && Array.isArray(savedBrands) ? savedBrands : BRANDS.map(b => ({...b}));
+  } catch(e) {
+    brandState = BRANDS.map(b => ({...b}));
+  }
+
+  // Keeps your saved brand list updated if you add new brands to the code later.
+  BRANDS.forEach(defaultBrand => {
+    if (!brandState.some(savedBrand => savedBrand.name === defaultBrand.name)) {
+      brandState.push({...defaultBrand});
+    }
+  });
 }
 function saveToStorage() {
-  try { localStorage.setItem('sophie_stats', JSON.stringify(stats)); localStorage.setItem('sophie_postlogs', JSON.stringify(postLogs)); } catch(e) {}
+  try {
+    localStorage.setItem('sophie_stats', JSON.stringify(stats));
+    localStorage.setItem('sophie_postlogs', JSON.stringify(postLogs));
+    localStorage.setItem('sophie_brand_statuses', JSON.stringify(brandState));
+  } catch(e) {}
 }
 function applyStats() {
   document.getElementById('hdr-followers').textContent = stats.followers || DEFAULTS.followers;
@@ -700,12 +736,31 @@ function buildPlan() {
 function quickLog(day){switchTab(5);setTimeout(()=>{document.getElementById('log-day').value=day;document.getElementById('log-what').focus();showToast('Fill in what you posted for Day '+day);},100);}
 
 function renderBrands(){
-  const filtered=BRANDS.filter(b=>(currentFilter==='all'||b.status===currentFilter)&&b.name.toLowerCase().includes(currentSearch.toLowerCase()));
-  const gc=BRANDS.filter(b=>b.status==='gifting').length;
-  document.getElementById('brand-count').textContent=`${BRANDS.length} brands contacted · ${gc} confirmed gifting`;
+  const filtered=brandState.filter(b=>(currentFilter==='all'||b.status===currentFilter)&&b.name.toLowerCase().includes(currentSearch.toLowerCase()));
+  const gc=brandState.filter(b=>b.status==='gifting').length;
+  document.getElementById('brand-count').textContent=`${brandState.length} brands contacted · ${gc} confirmed gifting`;
+  document.getElementById('hdr-gifting').textContent=gc;
+  stats.giftingCount = String(gc);
   document.getElementById('brand-list').innerHTML=filtered.length===0
     ?'<p style="color:var(--text-muted);text-align:center;padding:20px;font-size:13px">No brands match this filter</p>'
-    :filtered.map(b=>{const sc=STATUS_CONFIG[b.status];return`<div class="brand-row" style="${b.status==='gifting'?'border-color:#c8e6d0;box-shadow:0 2px 8px rgba(90,125,101,0.1)':''}"><span class="brand-name ${b.status==='gifting'?'gifting':''}">${b.name}</span><span class="status-pill" style="background:${sc.bg};color:${sc.color}">${sc.label}</span></div>`;}).join('');
+    :filtered.map(b=>{const sc=STATUS_CONFIG[b.status];return`
+      <div class="brand-row" style="${b.status==='gifting'?'border-color:#c8e6d0;box-shadow:0 2px 8px rgba(90,125,101,0.1)':''}">
+        <span class="brand-name ${b.status==='gifting'?'gifting':''}">${b.name}</span>
+        <select class="status-select" onchange="changeBrandStatus(${JSON.stringify(b.name).replace(/"/g,'&quot;')}, this.value)" style="background-color:${sc.bg};color:${sc.color}">
+          <option value="sent" ${b.status==='sent'?'selected':''}>Sent</option>
+          <option value="gifting" ${b.status==='gifting'?'selected':''}>Gifting</option>
+          <option value="pr_list" ${b.status==='pr_list'?'selected':''}>PR List</option>
+          <option value="not_now" ${b.status==='not_now'?'selected':''}>Not Now</option>
+        </select>
+      </div>`;}).join('');
+}
+function changeBrandStatus(name,newStatus){
+  const brand = brandState.find(b=>b.name===name);
+  if(!brand) return;
+  brand.status = newStatus;
+  saveToStorage();
+  renderBrands();
+  showToast(`${name} updated to ${STATUS_CONFIG[newStatus].label}`);
 }
 function filterBrands(f,btn){currentFilter=f;document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderBrands();}
 function searchBrands(val){currentSearch=val;renderBrands();}
