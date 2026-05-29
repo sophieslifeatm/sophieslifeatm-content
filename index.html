@@ -370,28 +370,6 @@
   <div class="tab-content" id="tab-2">
     <h2 class="section-title">ShopMy <em>Strategy</em></h2>
     <p class="section-sub">Your ShopMy is performing really well. Let's keep it growing.</p>
-    <div class="stats-grid">
-      <div class="stat-tile" style="background:var(--sage-pale)">
-        <div class="stat-tile-val" style="color:var(--sage-dark)" id="sm-earned">$1,516</div>
-        <div class="stat-tile-lbl" style="color:var(--sage-dark)">Earned 2026</div>
-        <div class="stat-tile-sub" style="color:var(--sage-dark)">Total this year</div>
-      </div>
-      <div class="stat-tile" style="background:var(--butter)">
-        <div class="stat-tile-val" style="color:var(--butter-dark)" id="sm-clicks">362</div>
-        <div class="stat-tile-lbl" style="color:var(--butter-dark)">Clicks Today</div>
-        <div class="stat-tile-sub" style="color:var(--butter-dark)">Spike day</div>
-      </div>
-      <div class="stat-tile" style="background:var(--pink-pale)">
-        <div class="stat-tile-val" style="color:var(--pink-dark)">136</div>
-        <div class="stat-tile-lbl" style="color:var(--pink-dark)">Top Orders</div>
-        <div class="stat-tile-sub" style="color:var(--pink-dark)">Target pants · $430</div>
-      </div>
-      <div class="stat-tile" style="background:var(--lav-pale)">
-        <div class="stat-tile-val" style="color:var(--lavender)" id="sm-shoppers">404</div>
-        <div class="stat-tile-lbl" style="color:var(--lavender)">Shoppers</div>
-        <div class="stat-tile-sub" style="color:var(--lavender)">Icon tier</div>
-      </div>
-    </div>
     <div class="card">
       <div class="card-label">Ask me anything</div>
       <textarea class="prompt-area" id="shopmy-input" placeholder="e.g. 'How do I convert viral viewers to ShopMy clicks?' or 'What collections should I create?' or 'Best way to mention ShopMy without being salesy?'"></textarea>
@@ -629,9 +607,9 @@ function applyStats() {
   document.getElementById('hdr-views').textContent = stats.views7d || DEFAULTS.views7d;
   document.getElementById('hdr-shopmy').textContent = stats.earned || DEFAULTS.earned;
   document.getElementById('hdr-gifting').textContent = stats.giftingCount || DEFAULTS.giftingCount;
-  document.getElementById('sm-earned').textContent = stats.earned || DEFAULTS.earned;
-  document.getElementById('sm-clicks').textContent = stats.clicks || DEFAULTS.clicks;
-  document.getElementById('sm-shoppers').textContent = stats.shoppers || DEFAULTS.shoppers;
+  const smEarned = document.getElementById('sm-earned'); if (smEarned) smEarned.textContent = stats.earned || DEFAULTS.earned;
+  const smClicks = document.getElementById('sm-clicks'); if (smClicks) smClicks.textContent = stats.clicks || DEFAULTS.clicks;
+  const smShoppers = document.getElementById('sm-shoppers'); if (smShoppers) smShoppers.textContent = stats.shoppers || DEFAULTS.shoppers;
   const f = parseInt((stats.followers||'').replace(/[^0-9]/g,'')) || 7877;
   const pct = Math.min(100, Math.round((f/10000)*100));
   document.getElementById('header-sub-text').textContent = `@sophieslifeatm · ${stats.followers||DEFAULTS.followers} towards 10K · ${pct}% there`;
