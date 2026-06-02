@@ -443,10 +443,9 @@
 
     <div class="card">
       <div class="card-label">ShopMy Stats</div>
-      <div class="update-field"><label class="field-label">Earned This Year</label><input class="field-input" id="upd-earned" type="text" placeholder="e.g. $1,800"></div>
-      <div class="update-field"><label class="field-label">Clicks Today</label><input class="field-input" id="upd-clicks" type="text" placeholder="e.g. 245"></div>
-      <div class="update-field"><label class="field-label">Trusted Shoppers</label><input class="field-input" id="upd-shoppers" type="text" placeholder="e.g. 450"></div>
-      <div class="update-field"><label class="field-label">Gifting Brands Confirmed</label><input class="field-input" id="upd-gifting-count" type="text" placeholder="e.g. 6"></div>
+      <div class="update-field"><label class="field-label">Overall Earnings</label><input class="field-input" id="upd-earned" type="text" placeholder="e.g. $1,800"></div>
+      <div class="update-field"><label class="field-label">Overall Shoppers</label><input class="field-input" id="upd-shoppers" type="text" placeholder="e.g. 450"></div>
+      <div class="update-field"><label class="field-label">Gifted / Gifting Brands</label><input class="field-input" id="upd-gifting-count" type="text" placeholder="e.g. 13"></div>
     </div>
     <button class="btn-primary" onclick="saveStats()">Save Stats</button>
 
@@ -705,7 +704,6 @@ function applyStats() {
   document.getElementById('hdr-shopmy').textContent = stats.earned || DEFAULTS.earned;
   document.getElementById('hdr-gifting').textContent = stats.giftingCount || DEFAULTS.giftingCount;
   const smEarned = document.getElementById('sm-earned'); if (smEarned) smEarned.textContent = stats.earned || DEFAULTS.earned;
-  const smClicks = document.getElementById('sm-clicks'); if (smClicks) smClicks.textContent = stats.clicks || DEFAULTS.clicks;
   const smShoppers = document.getElementById('sm-shoppers'); if (smShoppers) smShoppers.textContent = stats.shoppers || DEFAULTS.shoppers;
   let followerRaw = (stats.followers || DEFAULTS.followers).toString().toLowerCase().trim();
   let f = parseFloat(followerRaw.replace(/[^0-9.]/g,''));
@@ -715,11 +713,11 @@ function applyStats() {
   document.getElementById('header-sub-text').textContent = `@sophieslifeatm · ${stats.followers||DEFAULTS.followers} towards 10K · ${pct}% there`;
 }
 function populateUpdateFields() {
-  const map = {'upd-followers':'followers','upd-views7d':'views7d','upd-views28d':'views28d','upd-engagement':'engagement','upd-earned':'earned','upd-clicks':'clicks','upd-shoppers':'shoppers','upd-gifting-count':'giftingCount'};
+  const map = {'upd-followers':'followers','upd-views7d':'views7d','upd-views28d':'views28d','upd-engagement':'engagement','upd-earned':'earned','upd-shoppers':'shoppers','upd-gifting-count':'giftingCount'};
   Object.entries(map).forEach(([id,key]) => { const el = document.getElementById(id); if(el) el.value = stats[key]||''; });
 }
 function saveStats() {
-  const map = {'upd-followers':'followers','upd-views7d':'views7d','upd-views28d':'views28d','upd-engagement':'engagement','upd-earned':'earned','upd-clicks':'clicks','upd-shoppers':'shoppers','upd-gifting-count':'giftingCount'};
+  const map = {'upd-followers':'followers','upd-views7d':'views7d','upd-views28d':'views28d','upd-engagement':'engagement','upd-earned':'earned','upd-shoppers':'shoppers','upd-gifting-count':'giftingCount'};
   Object.entries(map).forEach(([id,key]) => { const el = document.getElementById(id); if(el && el.value.trim()) stats[key] = el.value.trim(); });
   saveToStorage(); applyStats(); showToast('Stats saved');
 }
