@@ -902,7 +902,22 @@ function buildPlan() {
     container.appendChild(div);
   });
 }
-function quickLog(day){switchTab(5);setTimeout(()=>{document.getElementById('log-day').value=day;document.getElementById('log-what').focus();showToast('Fill in what you posted for Day '+day);},100);}
+function quickLog(day){
+  let planned = null;
+  PLAN_DATA.forEach(week => week.days.forEach(d => { if(d.day === day) planned = d; }));
+  if(!planned){ showToast('Could not find that day'); return; }
+  let what = planned.idea.replace(/^Posted:\s*/i, '').trim();
+  postLogs[day] = {
+    what,
+    views: '',
+    notes: 'Marked from 30-day plan',
+    date: new Date().toLocaleDateString('en-US',{month:'short',day:'numeric'})
+  };
+  saveToStorage();
+  buildPlan();
+  renderRecentLogs();
+  showToast('Day ' + day + ' marked as posted');
+}
 
 function escapeHtml(str) {
   return String(str).replace(/[&<>'"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[ch]));
