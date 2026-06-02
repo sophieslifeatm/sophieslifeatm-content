@@ -431,7 +431,7 @@
   <!-- UPDATE -->
   <div class="tab-content" id="tab-5">
     <h2 class="section-title">Update <em>Stats</em></h2>
-    <p class="section-sub">Keep your numbers fresh — everything saves automatically to your phone.</p>
+    <p class="section-sub">Keep your numbers fresh — everything saves automatically to your browser.</p>
 
     <div class="card">
       <div class="card-label">TikTok Analytics</div>
@@ -449,19 +449,6 @@
     </div>
     <button class="btn-primary" onclick="saveStats()">Save Stats</button>
 
-    <div class="divider">· · · · ✦ · · · ·</div>
-
-    <h2 class="section-title" style="margin-bottom:6px">Log a <em>Post</em></h2>
-    <p class="section-sub">Write down what you actually posted so your 30-day plan stays up to date.</p>
-    <div class="card">
-      <div class="card-label">Post details</div>
-      <div class="update-field"><label class="field-label">Day Number (1–30)</label><input class="field-input" id="log-day" type="number" placeholder="e.g. 3" min="1" max="30"></div>
-      <div class="update-field"><label class="field-label">What did you post?</label><textarea class="field-input prompt-area" id="log-what" style="min-height:60px" placeholder="e.g. Target haul — 3 Wild Fable sets, pink tank, matching shorts"></textarea></div>
-      <div class="update-field"><label class="field-label">Views (can fill in later)</label><input class="field-input" id="log-views" type="text" placeholder="e.g. 24.7K"></div>
-      <div class="update-field"><label class="field-label">Notes · What worked?</label><input class="field-input" id="log-notes" type="text" placeholder="e.g. used trending audio, posted at 7pm"></div>
-      <button class="btn-primary" onclick="logPost()">Mark as Posted</button>
-    </div>
-    <div id="recent-logs"></div>
   </div>
 
 </div>
@@ -532,6 +519,7 @@ const BRANDS = [
   {name:'Roz',status:'sent'},
   {name:'Tula',status:'sent'},
   {name:'Origins',status:'sent'},
+  {name:'Josie Maran',status:'pr_list'},
   {name:'Suri',status:'not_now'},
   {name:'Zadig & Voltaire',status:'sent'},
   {name:'Kate Spade',status:'sent'},
@@ -641,7 +629,7 @@ const STATUS_CONFIG = {
   sent:    {label:'Sent',     bg:'var(--butter)',    color:'var(--butter-dark)'},
 };
 
-const BRAND_LIST_VERSION = 'shopmy-brands-2026-06-02';
+const BRAND_LIST_VERSION = 'shopmy-brands-2026-06-02-josie-pr-no-log';
 const STATS_VERSION = 'analytics-2026-06-01';
 
 let stats = {}, postLogs = {}, brandState = [], currentFilter = 'all', currentSearch = '', expandedWeek = -1;
@@ -733,6 +721,7 @@ function logPost() {
 function deleteLog(day) { delete postLogs[day]; saveToStorage(); renderRecentLogs(); buildPlan(); }
 function renderRecentLogs() {
   const el = document.getElementById('recent-logs');
+  if(!el) return;
   const entries = Object.entries(postLogs).sort((a,b)=>b[0]-a[0]);
   if(!entries.length){el.innerHTML='';return;}
   el.innerHTML = `<div style="margin-top:20px"><div class="card-label" style="margin-bottom:12px">Your post log</div>`
@@ -756,7 +745,7 @@ function showToast(msg) {
 function switchTab(i) {
   document.querySelectorAll('.tab-content').forEach((t,idx)=>t.classList.toggle('active',idx===i));
   document.querySelectorAll('.tab-btn').forEach((b,idx)=>b.classList.toggle('active',idx===i));
-  if(i===5){populateUpdateFields();renderRecentLogs();}
+  if(i===5){populateUpdateFields();}
 }
 function setPrompt(type,text){document.getElementById(type+'-input').value=text;}
 
