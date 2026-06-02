@@ -302,12 +302,12 @@
   <div class="header-inner">
     <p class="header-symbol">✦ · · ✦ · · ✦</p>
     <h1 class="header-title">Sophie's <em>Content Studio</em></h1>
-    <p class="header-sub" id="header-sub-text">@sophieslifeatm · 7,877 towards 10K</p>
+    <p class="header-sub" id="header-sub-text">@sophieslifeatm · 8.1K towards 10K · 81% there</p>
     <div class="stats-row">
-      <div class="stat-card"><div class="stat-val" id="hdr-followers">7,877</div><div class="stat-lbl">Followers</div></div>
-      <div class="stat-card"><div class="stat-val" id="hdr-views">1.1M</div><div class="stat-lbl">Views 7d</div></div>
-      <div class="stat-card"><div class="stat-val" id="hdr-shopmy">$1,516</div><div class="stat-lbl">ShopMy</div></div>
-      <div class="stat-card"><div class="stat-val" id="hdr-gifting">4</div><div class="stat-lbl">Gifting</div></div>
+      <div class="stat-card"><div class="stat-val" id="hdr-followers">8.1K</div><div class="stat-lbl">Followers</div></div>
+      <div class="stat-card"><div class="stat-val" id="hdr-views">1.2M</div><div class="stat-lbl">Views 7d</div></div>
+      <div class="stat-card"><div class="stat-val" id="hdr-shopmy">$1,534</div><div class="stat-lbl">ShopMy</div></div>
+      <div class="stat-card"><div class="stat-val" id="hdr-gifting">13</div><div class="stat-lbl">Gifting</div></div>
     </div>
   </div>
 </div>
@@ -387,7 +387,7 @@
   <!-- 30-DAY PLAN -->
   <div class="tab-content" id="tab-3">
     <h2 class="section-title">30-Day <em>Plan</em></h2>
-    <p class="section-sub">Starting May 28 · Tap Mark as Posted on any day to log what you actually posted.</p>
+    <p class="section-sub">Updated June 1 · Recent posts are built in, and you can still tap Mark as Posted to log what you actually post.</p>
     <div class="legend">
       <span class="type-pill" style="background:var(--butter);color:var(--butter-dark)">Haul</span>
       <span class="type-pill" style="background:var(--pink-pale);color:var(--pink-dark)">Beauty</span>
@@ -471,49 +471,56 @@
 
 <script>
 const DEFAULTS = {
-  followers:'7,877', views7d:'1.1M', views28d:'1.3M',
-  likes:'523.8K', engagement:'13.1%',
-  earned:'$1,516', clicks:'362', shoppers:'404', giftingCount:'4'
+  followers:'8.1K', views7d:'1.2M', views28d:'1.2M',
+  profileViews:'14.7K', likes:'539K', likes7d:'214.1K',
+  comments7d:'974', shares7d:'18K', engagement:'19.4%',
+  earned:'$1,534', clicks:'184', shoppers:'438', giftingCount:'13'
 };
+
 
 const PLAN_DATA = [
   {week:1,days:[
-    {day:1,type:'haul',idea:'Target Summer Haul — Wild Fable matching sets and new arrivals',shopmy:'Link all Target items',cta:'follow for more Target hauls'},
-    {day:2,type:'lifestyle',idea:'Spend the morning with me — summer edition, pool, errands, Whole Foods run',shopmy:'Outfit links and any PR gifts',cta:'follow along for my daily life'},
-    {day:3,type:'beauty',idea:'First impressions: Prequel gifted products unboxing',shopmy:'Prequel ShopMy links',cta:'follow for more honest beauty reviews'},
-    {day:4,type:'haul',idea:'Amazon summer tops under $30 — linking everything',shopmy:'Amazon storefront and ShopMy',cta:'follow for more affordable finds'},
-    {day:5,type:'tips',idea:'How I got gifting as a microinfluencer — sequel to my viral PR tip videos',shopmy:'—',cta:'follow for the next tips video'},
-    {day:6,type:'haul',idea:'Divi hair gifted unboxing and first impression try',shopmy:'Divi ShopMy link',cta:'follow to see my full review'},
-    {day:7,type:'lifestyle',idea:'Morning room reset and summer decor haul',shopmy:'Room finds on ShopMy',cta:'follow for more room inspo'},
+    {day:1,type:'tips',idea:'Posted: Getting PR as a microinfluencer — how do brands find you?',shopmy:'Creator tips + mention ShopMy/gifting angle naturally',cta:'follow for more microinfluencer tips'},
+    {day:2,type:'haul',idea:'Posted: Gap matching set haul — no talking try-on version',shopmy:'Gap sets linked in ShopMy',cta:'follow for more matching set hauls'},
+    {day:3,type:'haul',idea:'Posted: Amazon workout set haul — cute sets I would wear outside of working out',shopmy:'Amazon storefront + ShopMy links',cta:'follow for more affordable sets'},
+    {day:4,type:'lifestyle',idea:'Posted: Solo wellness morning with Proper Health + today’s scent combo',shopmy:'Proper set, outfit, fragrance/body care linked',cta:'follow for more wellness mornings'},
+    {day:5,type:'beauty',idea:'Posted: Sephora haul with Phlur + Rhode AND new healthy Target finds',shopmy:'Sephora/Target finds linked',cta:'follow for more hauls and finds'},
+    {day:6,type:'haul',idea:'Post 1: New Target matching sets | Post 2: After travel skin reset',shopmy:'Target sets + skincare products linked',cta:'follow for more Target finds and routines'},
+    {day:7,type:'tips',idea:'ShopMy 101: Things I wish I knew before trying to get gifting — start by showing what gifting you have received',shopmy:'Mention ShopMy Icon + gifting tracker',cta:'follow for more small creator tips'},
   ]},
   {week:2,days:[
-    {day:8,type:'haul',idea:'Salt and Stone gifted haul — body care routine reveal',shopmy:'Salt and Stone links',cta:'follow for my full summer body care routine'},
-    {day:9,type:'beauty',idea:'My everyday summer makeup routine GRWM feat. gifted products',shopmy:'All makeup linked',cta:'follow for more GRWMs'},
-    {day:10,type:'haul',idea:'Aritzia try-on — worth the splurge vs. dupes',shopmy:'Aritzia and dupe alternatives',cta:'follow for more honest try-ons'},
-    {day:11,type:'lifestyle',idea:'A day in my life — Connecticut summer vlog',shopmy:'OOTD linked throughout',cta:'follow along for more day-in-my-life'},
-    {day:12,type:'haul',idea:'Saltair body care gifted review and summer shower routine',shopmy:'Saltair ShopMy links',cta:'follow to see my full routine'},
-    {day:13,type:'tips',idea:'How I organize my ShopMy and tips for small creators to make money with affiliate links',shopmy:'ShopMy referral link',cta:'follow for more creator tips'},
-    {day:14,type:'haul',idea:'Gap summer haul — the pieces your closet actually needs',shopmy:'Gap ShopMy links',cta:'follow for more affordable summer fashion'},
+    {day:8,type:'beauty',idea:'What I got in PR as a small creator this week — quick, grateful, realistic unboxing',shopmy:'Link any gifted products you can',cta:'follow for more PR hauls'},
+    {day:9,type:'beauty',idea:'Products I loved in May that you need to buy in June',shopmy:'Create a June favorites shelf in ShopMy',cta:'follow for more monthly favorites'},
+    {day:10,type:'lifestyle',idea:'Overnight curls tutorial — easy no-heat curls and morning results',shopmy:'Link curl tools, hair products, robe/PJs if cute',cta:'follow for more easy hair routines'},
+    {day:11,type:'beauty',idea:'Impressions on Cyklar tanning essence — first try or honest update',shopmy:'Cyklar link + tanning/body care shelf',cta:'follow for the wear test/update'},
+    {day:12,type:'lifestyle',idea:'Customize my Kindle with me — “I finally got a Kindle” cheer sound effect',shopmy:'Kindle case, stickers, accessories linked',cta:'follow for more cozy lifestyle finds'},
+    {day:13,type:'beauty',idea:'Full face using products I got in PR — honest opinions, what I would actually rebuy',shopmy:'Link PR products and everyday makeup staples',cta:'follow for honest beauty reviews'},
+    {day:14,type:'haul',idea:'Amazon sets I’d actually wear outside the gym — walk, errands, pilates, coffee run styling',shopmy:'Amazon sets + outfit add-ons linked',cta:'follow for more affordable outfit finds'},
   ]},
   {week:3,days:[
-    {day:15,type:'beauty',idea:'PR haul update — everything I have received this month bundled',shopmy:'All gifted brands linked',cta:'follow for more PR hauls'},
-    {day:16,type:'haul',idea:'Free People vs. dupe — affordable finds that look expensive',shopmy:'FP and dupe links',cta:'follow for more dupe content'},
-    {day:17,type:'lifestyle',idea:'My morning reset routine — productive girl summer era',shopmy:'Products used linked',cta:'follow for more morning content'},
-    {day:18,type:'haul',idea:'Abercrombie summer haul — jeans, sets and going out tops',shopmy:'Abercrombie links',cta:'follow for more try-on hauls'},
-    {day:19,type:'beauty',idea:'Skincare routine update — new products I am loving, Prequel and others',shopmy:'Full skincare routine linked',cta:'follow for my honest skincare reviews'},
-    {day:20,type:'tips',idea:'How to reach out to brands — my exact messages that work',shopmy:'—',cta:'follow for part 2 of brand collab tips'},
-    {day:21,type:'haul',idea:'Amazon summer fashion haul — Skims dupes and basics under $25',shopmy:'All items linked',cta:'follow for more Amazon finds'},
+    {day:15,type:'lifestyle',idea:'How I do my self-care routine to feel luxurious and brand new',shopmy:'Body care, fragrance, skincare, robe/towel linked',cta:'follow for more self-care routines'},
+    {day:16,type:'haul',idea:'Abercrombie jeans update — is it worth trying to shrink them?',shopmy:'Abercrombie jeans + similar petite options linked',cta:'follow for the results'},
+    {day:17,type:'haul',idea:'Everything on my wishlist for June — beauty, outfits, room, Kindle, summer finds',shopmy:'Make a June wishlist shelf',cta:'follow to see what I actually buy'},
+    {day:18,type:'beauty',idea:'Prequel package first impressions — what I am testing this week',shopmy:'Prequel products linked',cta:'follow for the 1-week update'},
+    {day:19,type:'lifestyle',idea:'Morning room reset — updated summer version after the viral one',shopmy:'Room, bedding, decor, storage linked',cta:'follow for more room resets'},
+    {day:20,type:'haul',idea:'Target finds that look more expensive than they are — fashion or healthy food version',shopmy:'Target shelf front and center',cta:'follow for more Target finds'},
+    {day:21,type:'tips',idea:'Small creator mistakes I stopped making when reaching out to brands',shopmy:'Reference your brand tracker + ShopMy outreach',cta:'follow for part 2'},
   ]},
   {week:4,days:[
-    {day:22,type:'lifestyle',idea:'Week-in-my-life — Connecticut summer creator life',shopmy:'All outfits linked',cta:'follow for more week-in-my-life content'},
-    {day:23,type:'haul',idea:'Target summer closet essentials haul',shopmy:'All Target items linked',cta:'follow for more Target hauls'},
-    {day:24,type:'beauty',idea:'Everything on my Sephora wishlist right now react and review format',shopmy:'Sephora links on ShopMy',cta:'follow for my full Sephora haul'},
-    {day:25,type:'tips',idea:'3 things I changed that helped me grow from 5K to almost 10K',shopmy:'ShopMy referral',cta:'follow along for the journey to 10K'},
-    {day:26,type:'haul',idea:'Huge summer PR haul — unboxing everything received this month',shopmy:'All gifted brands linked',cta:'follow for more unboxings'},
-    {day:27,type:'lifestyle',idea:'Spend the day with me — summer that girl routine',shopmy:'Products and outfits linked',cta:'follow for more lifestyle content'},
-    {day:28,type:'haul',idea:'My top 10 ShopMy picks right now — things my followers actually buy',shopmy:'Top converting items featured',cta:'follow and shop my page'},
+    {day:22,type:'beauty',idea:'Summer skincare routine for glowy skin — simple, realistic, not too many steps',shopmy:'Skincare + SPF linked',cta:'follow for more skincare routines'},
+    {day:23,type:'haul',idea:'Aritzia / Gap / Target matching set comparison — which one is actually worth it?',shopmy:'All matching sets and dupes linked',cta:'follow for more honest try-ons'},
+    {day:24,type:'lifestyle',idea:'Day in my life trying to hit 10K — content, errands, filming, ShopMy, editing',shopmy:'OOTD + products used linked',cta:'follow along to 10K'},
+    {day:25,type:'tips',idea:'How I organize my ShopMy links and decide what to put in my bio',shopmy:'ShopMy tutorial angle',cta:'follow for more creator tips'},
+    {day:26,type:'beauty',idea:'PR haul update — everything I have received lately and what I am most excited to try',shopmy:'All giftable products linked if available',cta:'follow for honest updates'},
+    {day:27,type:'haul',idea:'Free People / Aritzia style finds for less — affordable summer outfit ideas',shopmy:'Dupes + originals linked',cta:'follow for more affordable finds'},
+    {day:28,type:'lifestyle',idea:'Pool day or hot girl walk routine — outfit, drink, SPF, Kindle, fragrance',shopmy:'Outfit + SPF + Kindle accessories linked',cta:'follow for more summer lifestyle'},
+  ]},
+  {week:5,days:[
+    {day:29,type:'beauty',idea:'One-week update on products I tested from PR — what stayed in my routine?',shopmy:'PR products + routine shelf linked',cta:'follow for more honest updates'},
+    {day:30,type:'tips',idea:'10K post idea: POV you decided to start posting a year and three months ago and now this is your life',shopmy:'No hard sell, make it emotional and grateful',cta:'follow for the next chapter'},
   ]},
 ];
+
 
 const TYPE_CONFIG = {
   haul:      {bg:'var(--butter)',    color:'var(--butter-dark)', label:'Haul',      border:'#d4b86a'},
@@ -635,12 +642,35 @@ const STATUS_CONFIG = {
   sent:    {label:'Sent',     bg:'var(--butter)',    color:'var(--butter-dark)'},
 };
 
-const BRAND_LIST_VERSION = 'shopmy-brands-2026-06-01';
+const BRAND_LIST_VERSION = 'shopmy-brands-2026-06-02';
+const STATS_VERSION = 'analytics-2026-06-01';
 
 let stats = {}, postLogs = {}, brandState = [], currentFilter = 'all', currentSearch = '', expandedWeek = -1;
 
 function loadState() {
-  try { stats = JSON.parse(localStorage.getItem('sophie_stats') || 'null') || {...DEFAULTS}; } catch(e) { stats = {...DEFAULTS}; }
+  try {
+    stats = JSON.parse(localStorage.getItem('sophie_stats') || 'null') || {...DEFAULTS};
+    const savedStatsVersion = localStorage.getItem('sophie_stats_version');
+    if (savedStatsVersion !== STATS_VERSION) {
+      stats = {
+        ...stats,
+        followers: DEFAULTS.followers,
+        views7d: DEFAULTS.views7d,
+        views28d: DEFAULTS.views28d,
+        profileViews: DEFAULTS.profileViews,
+        likes: DEFAULTS.likes,
+        likes7d: DEFAULTS.likes7d,
+        comments7d: DEFAULTS.comments7d,
+        shares7d: DEFAULTS.shares7d,
+        engagement: DEFAULTS.engagement,
+        earned: DEFAULTS.earned,
+        clicks: DEFAULTS.clicks,
+        shoppers: DEFAULTS.shoppers,
+        giftingCount: DEFAULTS.giftingCount
+      };
+      localStorage.setItem('sophie_stats_version', STATS_VERSION);
+    }
+  } catch(e) { stats = {...DEFAULTS}; }
   try { postLogs = JSON.parse(localStorage.getItem('sophie_postlogs') || '{}'); } catch(e) { postLogs = {}; }
 
   try {
@@ -663,6 +693,7 @@ function loadState() {
 function saveToStorage() {
   try {
     localStorage.setItem('sophie_stats', JSON.stringify(stats));
+    localStorage.setItem('sophie_stats_version', STATS_VERSION);
     localStorage.setItem('sophie_postlogs', JSON.stringify(postLogs));
     localStorage.setItem('sophie_brand_statuses', JSON.stringify(brandState));
     localStorage.setItem('sophie_brand_list_version', BRAND_LIST_VERSION);
@@ -676,7 +707,10 @@ function applyStats() {
   const smEarned = document.getElementById('sm-earned'); if (smEarned) smEarned.textContent = stats.earned || DEFAULTS.earned;
   const smClicks = document.getElementById('sm-clicks'); if (smClicks) smClicks.textContent = stats.clicks || DEFAULTS.clicks;
   const smShoppers = document.getElementById('sm-shoppers'); if (smShoppers) smShoppers.textContent = stats.shoppers || DEFAULTS.shoppers;
-  const f = parseInt((stats.followers||'').replace(/[^0-9]/g,'')) || 7877;
+  let followerRaw = (stats.followers || DEFAULTS.followers).toString().toLowerCase().trim();
+  let f = parseFloat(followerRaw.replace(/[^0-9.]/g,''));
+  if (followerRaw.includes('k')) f = f * 1000;
+  if (!f || Number.isNaN(f)) f = 8100;
   const pct = Math.min(100, Math.round((f/10000)*100));
   document.getElementById('header-sub-text').textContent = `@sophieslifeatm · ${stats.followers||DEFAULTS.followers} towards 10K · ${pct}% there`;
 }
@@ -730,12 +764,14 @@ function setPrompt(type,text){document.getElementById(type+'-input').value=text;
 
 function buildContext() {
   return `You are a TikTok content strategist for Sophie (@sophieslifeatm), a 22-year-old Connecticut-based beauty, fashion and lifestyle creator.
-CURRENT STATS: ${stats.followers||DEFAULTS.followers} followers, ${stats.views7d||DEFAULTS.views7d} views last 7 days, ${stats.engagement||DEFAULTS.engagement} engagement rate, ShopMy Icon tier with ${stats.earned||DEFAULTS.earned} earned in 2026.
-TOP PERFORMING CONTENT: Target Matching Set Haul 1.1M views (VIRAL), Morning self-care 502.7K, the urge to get this haircut 426.3K, Amazon Spring Top Haul 121.5K.
-WHAT DRIVES FOLLOWS: PR haul tips, Target hauls, microinfluencer tip videos.
-SHOPMY TOP CONVERTERS: Target Wild Fable items (pants 136 orders $430, tank 111 orders $275), affordable dupes, under $30 framing.
+CURRENT STATS: ${stats.followers||DEFAULTS.followers} followers, ${stats.views7d||DEFAULTS.views7d} views last 7 days, ${stats.profileViews||DEFAULTS.profileViews} profile views, ${stats.likes7d||DEFAULTS.likes7d} likes, ${stats.comments7d||DEFAULTS.comments7d} comments, ${stats.shares7d||DEFAULTS.shares7d} shares, estimated ${stats.engagement||DEFAULTS.engagement} engagement, ShopMy Icon tier with ${stats.earned||DEFAULTS.earned} earned in 2026.
+RECENT POSTS: New healthy food at Target, Sephora haul with Phlur and Rhode, solo wellness morning with Proper Health, today's scent combo, Amazon workout set haul, Gap matching set haul, getting PR as a microinfluencer, and morning room reset.
+WHAT IS WORKING RIGHT NOW: Simple text overlay hauls, Target/matching set content, PR/gifting education, comments from friends/audience on products they want to try, lifestyle reset videos, scent/beauty mini routines.
+TOP PERFORMING CONTENT: Target Matching Set Haul 1M+ views, Morning Room Reset 3.6K+ likes, Getting PR as a microinfluencer strong saves, Gap Matching Set Haul strong comments/saves, Amazon sets driving follower comments even if not as viral.
+WHAT DRIVES FOLLOWS: PR haul tips, Target hauls, microinfluencer tip videos, relatable lifestyle/room resets.
+SHOPMY TOP CONVERTERS: Target Wild Fable items, affordable dupes, matching sets, under $30 and under $50 framing, products people ask about in comments.
 SOPHIE'S VOICE: Casual, warm, like texting a best friend. Captions start with a hook, end with a follow CTA.
-CONTENT PILLARS: Try-on hauls highest reach, PR and microinfluencer tips highest follow conversion, room and morning resets high saves, beauty GRWM loyal audience, dupes viral potential.`;
+CONTENT PILLARS: Try-on hauls highest reach, PR and microinfluencer tips highest follow conversion, room and morning resets high saves, beauty/GRWM loyal audience, dupes and affordable finds viral potential.`;
 }
 async function callClaude(sys,msg) {
   const res = await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:buildContext()+'\n\n'+sys,messages:[{role:'user',content:msg}]})});
@@ -833,7 +869,9 @@ function buildPlan() {
     div.style.marginBottom='12px';
     const btn = document.createElement('button');
     btn.className='week-btn'+(expandedWeek===wi?' open':'');
-    btn.innerHTML=`<div><div class="week-label">Week ${wi+1}</div>Days ${wi*7+1} — ${Math.min((wi+1)*7,28)}</div><span style="font-size:18px;font-weight:300">${expandedWeek===wi?'−':'+'}</span>`;
+    const firstDay = week.days[0]?.day || (wi*7+1);
+    const lastDay = week.days[week.days.length-1]?.day || firstDay;
+    btn.innerHTML=`<div><div class="week-label">Week ${wi+1}</div>Days ${firstDay} — ${lastDay}</div><span style="font-size:18px;font-weight:300">${expandedWeek===wi?'−':'+'}</span>`;
     btn.onclick=()=>{expandedWeek=expandedWeek===wi?-1:wi;buildPlan();};
     div.appendChild(btn);
     if(expandedWeek===wi){
